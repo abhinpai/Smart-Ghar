@@ -1,10 +1,10 @@
 #include <FirebaseESP8266.h>
 #include <ESP8266WiFi.h>
 
-#define ssid "Twin-Thumb"  //WiFi SSID
-#define password "LeaveMe@|0ne"  //WiFi Password      
-#define FIREBASE_HOST "ghar-794fe-default-rtdb.firebaseio.com"
-#define FIREBASE_AUTH "u7798f6wki49UspF2Hx0HGWnCQf8hqnnhxZvz13d"
+#define ssid ""  //WiFi SSID
+#define password ""  //WiFi Password      
+#define FIREBASE_HOST "" // Firebase Realtime database host id
+#define FIREBASE_AUTH "" // Firebase service account secret
 
 FirebaseData firebaseData;
 
