@@ -15,7 +15,6 @@ int Device_3 = D2; //initialize D2 Pin
 int Device_4 = D6; //initialize D6 Pin
 
 void setup() {
-  
  Serial.begin(9600);
    WiFi.begin (ssid, password);
    Serial.print("Connecting");
@@ -27,71 +26,68 @@ void setup() {
   Serial.println ("WiFi Connected!");
   Firebase.begin(FIREBASE_HOST,FIREBASE_AUTH);
   Firebase.reconnectWiFi(true);
-    
-  pinMode(Device_1,OUTPUT);//initialize the Device OUTPUT  
-  pinMode(Device_2,OUTPUT);//initialize the Device OUTPUT  
-  pinMode(Device_3,OUTPUT);//initialize the Device OUTPUT  
-  pinMode(Device_4,OUTPUT);//initialize the Device OUTPUT 
 
+  init_realy(); //initialize the Device OUTPUT 
+  init_firebase(); // Reset PIN values in Firebase
+}
 
-  // Reset PIN values in Firebase
-  Firebase.set(firebaseData, "/D1", "0");
-  Firebase.set(firebaseData, "/D2", "0");
-  Firebase.set(firebaseData, "/D3", "0");
-  Firebase.set(firebaseData, "/D4", "0");
+void init_realy() {
+  pinMode(Device_1,OUTPUT);
+  pinMode(Device_2,OUTPUT);
+  pinMode(Device_3,OUTPUT);
+  pinMode(Device_4,OUTPUT);
+  reset_relay();
+}
+
+void reset_relay() {
+  digitalWrite(Device_1,HIGH); 
+  digitalWrite(Device_2,HIGH); 
+  digitalWrite(Device_3,HIGH); 
+  digitalWrite(Device_4,HIGH); 
+}
+
+void init_firebase() {
+  Firebase.setInt(firebaseData, "/D1", 1);
+  Firebase.setInt(firebaseData, "/D2", 1);
+  Firebase.setInt(firebaseData, "/D3", 1);
+  Firebase.setInt(firebaseData, "/D4", 1);
 }
 
 void loop() {
-  if (Firebase.get(firebaseData,"/D1")) {
-    if (firebaseData.dataType() == "string") {
-      String De1 = firebaseData.stringData();
-      if (De1=="1") {
-          digitalWrite(Device_1,HIGH); //Device1 is ON
-          Serial.println ("Device 1 Turned ON");
-      }
-      else if (De1=="0") {
-          digitalWrite(Device_1,LOW);//Device1 if OFF
-          Serial.println ("Device 1 Turned OFF");
-      }
+  if (Firebase.getInt(firebaseData,"/D1")) {
+    int De1 = firebaseData.intData();
+    if (De1==1) {
+      digitalWrite(Device_1,HIGH); 
+    }
+    else if (De1==0) {
+      digitalWrite(Device_1,LOW);
     }
   }
   if (Firebase.get(firebaseData,"/D2")) {
-      if (firebaseData.dataType() == "string") {
-        String De2 = firebaseData.stringData();
-        if (De2=="1") {
-            digitalWrite(Device_2,HIGH); //Device1 is ON
-            Serial.println ("Device 2 Turned ON");
-        }
-        else if (De2=="0") {
-            digitalWrite(Device_2,LOW);//Device1 if OFF
-            Serial.println ("Device 2 Turned OFF");
-        }
-      }
+    int De2 = firebaseData.intData();
+    if (De2==1) {
+      digitalWrite(Device_2,HIGH); 
     }
+    else if (De2==0) {
+      digitalWrite(Device_2,LOW);
+    }
+   }
    if (Firebase.get(firebaseData,"/D3")) {
-      if (firebaseData.dataType() == "string") {
-        String De3 = firebaseData.stringData();
-        if (De3=="1") {
-            digitalWrite(Device_3,HIGH); //Device1 is ON
-            Serial.println ("Device 3 Turned ON");
-        }
-        else if (De3=="0") {
-            digitalWrite(Device_3,LOW);//Device1 if OFF
-            Serial.println ("Device 3 Turned OFF");
-        }
-      }
+    int De3 = firebaseData.intData();
+    if (De3==1) {
+      digitalWrite(Device_3,HIGH); 
     }
-   if (Firebase.get(firebaseData,"/D4")) {
-      if (firebaseData.dataType() == "string") {
-        String De4 = firebaseData.stringData();
-        if (De4=="1") {
-            digitalWrite(Device_4,HIGH); //Device1 is ON
-            Serial.println ("Device 4 Turned ON");
-        }
-        else if (De4=="0") {
-            digitalWrite(Device_4,LOW);//Device1 if OFF
-            Serial.println ("Device 4 Turned OFF");
-        }
-      }
+    else if (De3==0) {
+      digitalWrite(Device_3,LOW);
     }
   }
+   if (Firebase.get(firebaseData,"/D4")) {
+    int De4 = firebaseData.intData();
+    if (De4==1) {
+      digitalWrite(Device_4,HIGH); 
+    }
+    else if (De4==0) {
+      digitalWrite(Device_4,LOW);
+    }
+  }
+}
