@@ -47,14 +47,14 @@ void reset_relay() {
 }
 
 void init_firebase() {
-  Firebase.setInt(firebaseData, "/D1", 1);
-  Firebase.setInt(firebaseData, "/D2", 1);
-  Firebase.setInt(firebaseData, "/D3", 1);
-  Firebase.setInt(firebaseData, "/D4", 1);
+  Firebase.setInt(firebaseData, "Plugs/D1", 1);
+  Firebase.setInt(firebaseData, "Plugs/D2", 1);
+  Firebase.setInt(firebaseData, "Plugs/D3", 1);
+  Firebase.setInt(firebaseData, "Plugs/D4", 1);
 }
 
 void loop() {
-  if (Firebase.getInt(firebaseData,"/D1")) {
+  if (Firebase.getInt(firebaseData,"Plugs/D1")) {
     int De1 = firebaseData.intData();
     if (De1==1) {
       digitalWrite(Device_1,HIGH); 
@@ -63,7 +63,7 @@ void loop() {
       digitalWrite(Device_1,LOW);
     }
   }
-  if (Firebase.get(firebaseData,"/D2")) {
+  if (Firebase.get(firebaseData,"Plugs/D2")) {
     int De2 = firebaseData.intData();
     if (De2==1) {
       digitalWrite(Device_2,HIGH); 
@@ -72,7 +72,7 @@ void loop() {
       digitalWrite(Device_2,LOW);
     }
    }
-   if (Firebase.get(firebaseData,"/D3")) {
+   if (Firebase.get(firebaseData,"Plugs/D3")) {
     int De3 = firebaseData.intData();
     if (De3==1) {
       digitalWrite(Device_3,HIGH); 
@@ -81,7 +81,7 @@ void loop() {
       digitalWrite(Device_3,LOW);
     }
   }
-   if (Firebase.get(firebaseData,"/D4")) {
+   if (Firebase.get(firebaseData,"Plugs/D4")) {
     int De4 = firebaseData.intData();
     if (De4==1) {
       digitalWrite(Device_4,HIGH); 
